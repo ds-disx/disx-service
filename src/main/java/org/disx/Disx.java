@@ -1,7 +1,5 @@
 package org.disx;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,14 +12,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "post")
+@Table(name = "disx")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class Disx {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
 
     @Column(name = "title", nullable = false, unique = true, length = 280)
     public String title;
