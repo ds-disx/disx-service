@@ -1,0 +1,46 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - feat/pipeline
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      - name: Build with Gradle
+        run: ./gradlew clean build --no-daemon
+
+      # - name: Build frontend
+      #   run: |
+      #     cd frontend
+      #     yarn
+
+      # - name: Build and push backend image
+        # env:
+        #   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        #   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        # run: |
+        #   docker build -f backend/src/main/docker/Dockerfile.jvm -t redouansammour/buzzloop-backend:latest ./backend
+        #   docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        #   docker push redouansammour/buzzloop-backend:latest
+
+      # - name: Build and push frontend image
+      #   env:
+      #     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #   run: |
+      #     docker build -f frontend/Dockerfile -t redouansammour/buzzloop-frontend:latest ./frontend
+      #     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      #     docker push redouansammour/buzzloop-frontend:latest
