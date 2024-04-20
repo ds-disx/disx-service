@@ -24,6 +24,6 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker login --username derenserce --password ${{ secrets.GH_PAT }}
+          docker login --username derenserce --password ${{ secrets.GH_PAT }} ghcr.io
           docker build -f src/main/docker/Dockerfile.jvm -t ghcr.io/ds-disx/disx-service:latest .
           docker push ghcr.io/ds-disx/disx-service:latest 
