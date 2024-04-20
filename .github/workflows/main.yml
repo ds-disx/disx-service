@@ -1,0 +1,29 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      - name: Build with Gradle
+        run: ./gradlew clean build --no-daemon
+
+      - name: Build and push image
+        run: |
+          docker login --username derenserce --password ${{ secrets.GH_PAT }} ghcr.io
+          docker build -f src/main/docker/Dockerfile.jvm -t ghcr.io/ds-disx/disx-service:latest .
+          docker push ghcr.io/ds-disx/disx-service:latest 
