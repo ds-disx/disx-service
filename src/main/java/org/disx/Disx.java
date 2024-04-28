@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -19,11 +21,20 @@ public class Disx {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(name = "title", nullable = false, unique = true, length = 280)
-    public String title;
+    private String title;
 
     @Column(name = "content", nullable = false, length = 4000)
-    public String content;
+    private String content;
+
+    @Column(name = "username", nullable = false, length = 280)
+    private String username;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 }

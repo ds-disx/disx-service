@@ -2,6 +2,8 @@ package org.disx;
 
 import java.util.List;
 
+import io.quarkus.security.Authenticated;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.DELETE;
@@ -19,17 +21,9 @@ public class DisxResource {
     @Inject
     DisxService DisxService;
 
-    @GET
-    @Path("/hello")
-    public String hello() {
-        return "Hello";
-    }
+    @Inject
+    SecurityIdentity securityIdentity;
 
-    @POST
-    public Response createDisx(Disx Disx) {
-        DisxService.save(Disx);
-        return Response.ok(Disx.id).build();
-    }
 
     @GET
     public List<Disx> getDisxs() {
@@ -37,9 +31,16 @@ public class DisxResource {
     }
 
     @GET
+    @Path("/user/{username}")
+    @Transactional
+    public List<Disx> getDisxsByUsername(@PathParam("username") String username) {
+        return DisxService.findDisxsByUsername(username);
+    }
+
+    @GET
     @Path("/search")
     public List<Disx> findDisxsByTitle(@QueryParam("title") String title) {
-        return DisxService.findDisxsByTitle(title).toList();
+        return DisxService.findDisxsByTitle(title);
     }
 
     @GET
@@ -48,8 +49,16 @@ public class DisxResource {
         return DisxService.findDisxById(id);
     }
 
+    @POST
+    @Authenticated
+    public Response createDisx(Disx Disx) {
+        DisxService.save(Disx);
+        return Response.ok(Disx.getId()).build();
+    }
+
     @DELETE
     @Path("/{id}")
+    @Authenticated
     public Response deleteDisxById(@PathParam("id") Long id) {
         DisxService.deleteDisx(id);
         return Response.ok(id).build();

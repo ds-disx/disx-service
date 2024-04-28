@@ -1,7 +1,10 @@
 package org.disx;
 
 import java.util.List;
-import java.util.stream.Stream;
+
+import io.quarkus.panache.common.Sort;
+
+import java.time.LocalDateTime;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -15,25 +18,29 @@ public class DisxService {
     DisxRepository repository;
 
     public Disx save(Disx disx) {
+        disx.setCreatedAt(LocalDateTime.now());
         repository.persist(disx);
         return disx;
+    }
+
+    public List<Disx> findAllDisxs() {
+        return repository.listAllSorted();
     }
 
     public Disx findDisxById(Long id) {
         return repository.findById(id);
     }
 
-    public List<Disx> findAllDisxs() {
-        return repository.listAll();
+    public List<Disx> findDisxsByTitle(String title) {
+        return repository.listAllSorted().stream()
+                .filter(Disx -> Disx.getTitle().toLowerCase().contains(title.toLowerCase())).toList();
     }
 
-    public Stream<Disx> findDisxsByTitle(String title) {
-        return repository.listAll().stream()
-                .filter(Disx -> Disx.getTitle().toLowerCase().contains(title.toLowerCase()));
-    }
-
-    public Long deleteDisx(Long id) {
+    public void deleteDisx(Long id) {
         repository.deleteById(id);
-        return id;
+    }
+
+    public List<Disx> findDisxsByUsername(String username) {
+        return repository.findByUsername(username);
     }
 }
