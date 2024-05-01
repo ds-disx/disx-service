@@ -50,7 +50,7 @@ public class DisxResource {
     }
 
     @POST
-    @Authenticated
+    // @Authenticated
     public Response createDisx(Disx Disx) {
         DisxService.save(Disx);
         return Response.ok(Disx.getId()).build();
@@ -58,7 +58,7 @@ public class DisxResource {
 
     @DELETE
     @Path("/{id}")
-    @Authenticated
+    // @Authenticated
     public Response deleteDisxById(@PathParam("id") Long id) {
         DisxService.deleteDisx(id);
         return Response.ok(id).build();
