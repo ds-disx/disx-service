@@ -2,7 +2,7 @@ package org.disx;
 
 import java.util.List;
 
-import io.quarkus.security.Authenticated;
+// import io.quarkus.security.Authenticated;
 import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -32,7 +32,6 @@ public class DisxResource {
 
     @GET
     @Path("/user/{username}")
-    @Transactional
     public List<Disx> getDisxsByUsername(@PathParam("username") String username) {
         return DisxService.findDisxsByUsername(username);
     }

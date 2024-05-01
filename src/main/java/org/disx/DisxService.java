@@ -17,10 +17,9 @@ public class DisxService {
     @Inject
     DisxRepository repository;
 
-    public Disx save(Disx disx) {
+    public void save(Disx disx) {
         disx.setCreatedAt(LocalDateTime.now());
         repository.persist(disx);
-        return disx;
     }
 
     public List<Disx> findAllDisxs() {
