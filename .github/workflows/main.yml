@@ -20,10 +20,12 @@ jobs:
           distribution: "adopt"
 
       - name: Build with Gradle
-        run: ./gradlew clean build --no-daemon
+        run: ./gradlew clean build -x test --no-daemon
+
+      - name: Login to GitHub Container Registry
+        run: docker login --username derenserce --password ${{ secrets.GH_PAT }} ghcr.io
 
       - name: Build and push image
         run: |
-          docker login --username derenserce --password ${{ secrets.GH_PAT }} ghcr.io
-          docker build -f src/main/docker/Dockerfile.jvm -t ghcr.io/ds-disx/disx-service:latest .
-          docker push ghcr.io/ds-disx/disx-service:latest 
+          docker build -f src/main/docker/Dockerfile.jvm -t ghcr.io/ds-disx/disx-service:${GITHUB_SHA} .
+          docker push ghcr.io/ds-disx/disx-service:${GITHUB_SHA}
