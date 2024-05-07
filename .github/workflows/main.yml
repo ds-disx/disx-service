@@ -27,5 +27,5 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build -f src/main/docker/Dockerfile.jvm -t ghcr.io/ds-disx/disx-service:${GITHUB_SHA} .
-          docker push ghcr.io/ds-disx/disx-service:${GITHUB_SHA}
+          docker build -f src/main/docker/Dockerfile.jvm -t ghcr.io/ds-disx/disx-service:latest .
+          docker push ghcr.io/ds-disx/disx-service:latest
