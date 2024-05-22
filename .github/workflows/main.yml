@@ -50,7 +50,7 @@ jobs:
         run: az aks get-credentials --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_RESOURCE_GROUP }} --overwrite-existing
 
       - name: Rollout Restart Frontend on AKS
-        run: kubectl rollout restart deployment/frontend
+        run: kubectl rollout restart deployment/disx-service
         continue-on-error: true #If aks cluster is not available, the pipeline should not fail
       
     
