@@ -35,6 +35,17 @@ public class Disx {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
+    @Column(name = "comment_count", nullable = false)
+    private int commentCount;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    public Disx(String title, String content, String username, UUID userId, LocalDateTime time) {
+        this.title = title;
+        this.content = content;
+        this.username = username;
+        this.userId = userId;
+        this.createdAt = time;
+    }
 }

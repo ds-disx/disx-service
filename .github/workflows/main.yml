@@ -21,6 +21,9 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build -x test --no-daemon
+      
+      - name: Run tests
+        run: ./gradlew test
 
       - name: Login to GitHub Container Registry
         run: docker login --username derenserce --password ${{ secrets.GH_PAT }} ghcr.io
@@ -51,7 +54,7 @@ jobs:
 
       - name: Rollout Restart Frontend on AKS
         run: kubectl rollout restart deployment/disx-service
-        continue-on-error: true #If aks cluster is not available, the pipeline should not fail
+        continue-on-error: true 
       
     
   

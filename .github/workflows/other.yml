@@ -23,8 +23,8 @@ jobs:
           distribution: "adopt"
 
       - name: Build with Gradle
-        run: ./gradlew clean build -x test --no-daemon
-
+        run: ./gradlew clean build -x test
+            
       - name: Run tests
         run: ./gradlew test
 

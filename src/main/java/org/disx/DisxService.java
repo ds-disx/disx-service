@@ -19,6 +19,7 @@ public class DisxService {
 
     public void save(Disx disx) {
         disx.setCreatedAt(LocalDateTime.now());
+        disx.setCommentCount(0);
         repository.persist(disx);
     }
 
