@@ -19,6 +19,7 @@ public class Consumer {
     @Incoming("comment-queue")
     @Transactional
     public void consume(JsonObject json) {
+        log.info("Message received: {}", json);
         Long disxId = json.getLong("disxId");
         Disx disx = disxRepository.findById(disxId);
         disx.setCommentCount(disx.getCommentCount() + 1);
