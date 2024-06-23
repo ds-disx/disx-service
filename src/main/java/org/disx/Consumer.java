@@ -18,11 +18,23 @@ public class Consumer {
 
     @Incoming("comment-queue")
     @Transactional
-    public void consume(JsonObject json) {
-        log.info("Message received: {}", json);
-        Long disxId = json.getLong("disxId");
+    public void consume(JsonObject message) {
+        log.info("Message received: {}", message);
+
+        Long disxId = message.getLong("disxId");
+        Boolean isDeleted = message.getBoolean("isDeleted");
+
         Disx disx = disxRepository.findById(disxId);
-        disx.setCommentCount(disx.getCommentCount() + 1);
-        disxRepository.persist(disx);
+
+        if (disx != null) {
+            if (isDeleted) {
+                disx.setCommentCount(disx.getCommentCount() - 1);
+                log.info("Decremented comment count for disxId {}. New count: {}", disxId, disx.getCommentCount());
+            } else {
+                disx.setCommentCount(disx.getCommentCount() + 1);
+                log.info("Incremented comment count for disxId {}. New count: {}", disxId, disx.getCommentCount());
+            }
+            disxRepository.persist(disx);
+        }
     }
 }

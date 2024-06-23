@@ -2,8 +2,6 @@ package org.disx;
 
 import java.util.List;
 
-import io.quarkus.panache.common.Sort;
-
 import java.time.LocalDateTime;
 
 import jakarta.enterprise.context.ApplicationScoped;

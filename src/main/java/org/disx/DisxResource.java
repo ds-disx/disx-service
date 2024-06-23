@@ -1,9 +1,12 @@
 package org.disx;
 
 import java.util.List;
+import java.util.Set;
 
 // import io.quarkus.security.Authenticated;
+import io.quarkus.security.Authenticated;
 import io.quarkus.security.identity.SecurityIdentity;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.DELETE;
@@ -20,10 +23,6 @@ public class DisxResource {
 
     @Inject
     DisxService DisxService;
-
-    @Inject
-    SecurityIdentity securityIdentity;
-
 
     @GET
     public List<Disx> getDisxs() {
@@ -49,7 +48,7 @@ public class DisxResource {
     }
 
     @POST
-    // @Authenticated
+    @Authenticated
     public Response createDisx(Disx Disx) {
         DisxService.save(Disx);
         return Response.ok(Disx.getId()).build();
@@ -57,9 +56,9 @@ public class DisxResource {
 
     @DELETE
     @Path("/{id}")
-    // @Authenticated
+    @RolesAllowed({"admin"})
     public Response deleteDisxById(@PathParam("id") Long id) {
         DisxService.deleteDisx(id);
-        return Response.ok(id).build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }
