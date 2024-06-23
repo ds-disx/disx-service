@@ -56,7 +56,7 @@ public class DisxResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"admin"})
+    @RolesAllowed("admin")
     public Response deleteDisxById(@PathParam("id") Long id) {
         DisxService.deleteDisx(id);
         return Response.status(Response.Status.NO_CONTENT).build();
